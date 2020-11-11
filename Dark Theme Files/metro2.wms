@@ -1,0 +1,199 @@
+<theme>
+
+<VIEW id="vwPlayer"
+          width="440" height="480"
+          clippingColor="#FF00FF"
+          backgroundImage="bg.png"
+          
+          scriptFile="netgen.js;res://-/RT_TEXT/#169"
+          titleBar="false"
+          resizable="false"
+          onLoad="vwPlayer_OnLoad();alphaBlendTo();"
+          
+          
+          
+          
+          
+          focusObjectID_onchange="view.alphaBlendTo()"
+          onTimer="jscript:UpdateAlbumArt();if( timerinterval == 1 ) { ctrlVis.alphablendto(  ); ctrlAlbumArt.moveto(  ); vwPlayer.timerInterval=1; } else { timerInterval=0;ctrlAlbumArt.moveto(  ); }">
+		  
+		  <PLAYER openstatechange="vwPlayer_OnOpenStateChange(NewState);"
+       		 modeChange="vwPlayer_UpdateShuffleRepeat();" currentMedia_onchange="vwPlayer_UpdateMetadata();UpdateAlbumArt();view.timerInterval=1">
+        </PLAYER>
+		
+		<BUTTON
+			top="4"
+			left="10"
+			image="wmp.bmp" 
+			transparencyColor="#FF00FF"
+            
+		/>
+		
+		
+		
+		<BUTTONGROUP mappingImage="bg_map.png"
+                     hoverImage="bg_hover.png">		 
+                    
+            <BUTTONELEMENT mappingColor="#8c6239"
+                           upToolTip="res://-/RT_STRING/#1813"
+                           onClick="view.returnToMediaCenter();"
+                           accName="res://wmploc/RT_STRING/#3904"
+                           accKeyboardShortcut=""/>
+
+            <BUTTONELEMENT mappingColor="#f26522"
+                           upToolTip="res://-/RT_STRING/#1811"
+                           onClick="view.minimize();"
+                           accName="Minimize"
+                           accKeyboardShortcut=""/>
+
+            <BUTTONELEMENT mappingColor="#a186be"
+                           upToolTip="res://-/RT_STRING/#1812"
+                           onClick="view.close();"
+                           accName="res://-/RT_STRING/#1812"/>
+
+            <PLAYELEMENT   mappingColor="#00aeef"/>
+            <PREVELEMENT   mappingColor="#fff200"/>
+            <NEXTELEMENT   mappingColor="#00ff00"/>
+            
+            
+		</BUTTONGROUP>
+		
+				<BUTTONGROUP
+        			id="btnPause"
+        			visible="wmpenabled:player.controls.pause"
+       				visible_onchange="if (visible) {if (g_SetPlayPauseFocus){view.focusObjectID='btnPause';g_SetPlayPauseFocus=false;}} else if (view.focusObjectID=='btnPause') 	view.focusObjectID='TransportButtongroup';"
+       				image="pause_button.png"
+       				hoverImage="pause_button_hover.png"
+       				mappingImage="pause_map.png"
+                    zindex="2000"
+       				left="308"
+        			top="165">
+	   				<PAUSEELEMENT mappingColor="#2b11a5"/>
+   				</BUTTONGROUP>
+				
+                <SUBVIEW
+								
+								backgroundColor="black"
+								top="0"
+								left="0"
+								width="220"
+								height="220"
+								resizeBackgroundImage="false"
+								zindex="9990"
+				/>
+							<SUBVIEW
+								id="ctrlAlbumArt"
+								ctrlAlbumArt.resizeBackgroundImage="true"
+								backgroundTiled="true"
+								top="0"
+								left="0"
+								width="220"
+								height="220"
+								resizeBackgroundImage="true"
+								zindex="9999"
+							/>
+                            
+                           
+							
+				<SLIDER
+					id = "myslider"
+
+					min="0"
+					toolTip="res://-/RT_STRING/#1809"
+					max="wmpprop:player.currentmedia.duration"
+					value="wmpprop:player.controls.currentposition"
+					ondragend="player.controls.currentposition=value;"
+					tooltip = "current position"
+					height = "4"
+					width = "180"
+					onmouseup = "player.controls.currentPosition = myslider.value; "
+					top = "150"
+					left = "240"
+					backgroundImage = "backgroundImage.png"
+					foregroundImage = "foregroundImage.png"
+  					thumbimage = "thumbImage.png"
+				/>	
+  
+  
+							
+								
+									
+				<SUBVIEW id="svwMetadata"
+              				     top="10" left="227" width="230" height="165">
+         						   <TEXT id="artist"
+               					     	value=""
+										justification="center"
+      					             	left="0"
+    					             	top="55"
+      						         	width="200"
+                    					height="18"
+                    					fontFace="res://-/RT_STRING/#1888" 
+                    					fontSize="10"
+                    					foregroundColor="#D1D1D1"
+                    					tabStop="false"
+                    					value_onchange="scrolling=false;moveTo(left,top,5000);"
+                    					onendmove="scrolling=textWidth&gt;width;"
+                                        
+                   						scrollingDelay="40" scrollingAmount="1"
+                    					scrollingDirection="jscript:theme.loadString('res://wmploc/RT_STRING/#1910');"
+                   					 />
+									 
+            						<TEXT id="title"
+                                        justification="center"
+                    					value=""
+                    					left="0"
+                    					top="20"
+                    					width="200"
+                    					height="134"
+                    					fontFace="res://-/RT_STRING/#1888" 
+                    					fontSize="20"
+                    					foregroundColor="#ffffff"
+                    					tabStop="false"
+                    					scrollingDelay="40" scrollingAmount="1"
+                    					value_onchange="scrolling=false;moveTo(left,top,5000);"
+                    					onendmove="scrolling=textWidth&gt;width;"
+                    					scrollingDirection="jscript:theme.loadString('res://wmploc/RT_STRING/#1910');"
+                    				/>
+									
+                                     <TEXT 
+                                     
+                                     
+                                     
+                                     id="slider"
+                    					value="wmpprop:player.controls.currentPositionString"
+                                        justification="center"
+                    					left="0"
+                   						top="115"
+                    					width="200"
+                    					height="20"
+                                        zindex="50"
+                    					fontFace="res://-/RT_STRING/#1888" 
+                    					fontSize="10" 
+                    					foregroundColor="#D1D1D1"
+                    					tabStop="false"
+                    					scrollingDelay="40" scrollingAmount="1"
+                    					value_onchange="scrolling=false;moveTo(left,top,5000);"
+                    					onendmove="scrolling=textWidth&gt;width;"
+                    					scrollingDirection="jscript:theme.loadString('res://wmploc/RT_STRING/#1910');"
+                                    />
+                                    
+           							<TEXT id="album"
+										justification="center"
+                    					value=""
+                    					left="0"
+                   						top="75"
+                    					width="200"
+                    					height="20"
+                                        zindex="50"
+                    					fontFace="res://-/RT_STRING/#1888" 
+                    					fontSize="10"
+                    					foregroundColor="#D1D1D1"
+                    					tabStop="false"
+                    					scrollingDelay="40" scrollingAmount="1"
+                    					value_onchange="scrolling=false;moveTo(left,top,5000);"
+                    					onendmove="scrolling=textWidth&gt;width;"
+                    					scrollingDirection="jscript:theme.loadString('res://wmploc/RT_STRING/#1910');"
+                                    />
+        </SUBVIEW>
+    </VIEW>
+</theme>
